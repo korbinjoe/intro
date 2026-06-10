@@ -7,7 +7,7 @@
   <title>Korbin Joe</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="/favicon.svg">
-  <meta name="description" content="Korbin Joe — building OpenTeam, your AI agent team in minutes.">
+  <meta name="description" content="Korbin Joe — building TeemAI, your AI agent team in minutes.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -253,22 +253,28 @@ Type <em>help</em> for commands · <em>clear</em> to reset</p>
 
     <form class="input-row" id="form" autocomplete="off">
       <label class="prompt-line" for="input" id="prompt-label">
-        <span class="user">korbin</span><span class="at">@</span><span class="host">openteam</span>
+        <span class="user">korbin</span><span class="at">@</span><span class="host">teemai</span>
         <span class="symbol">:</span><span class="path">~</span><span class="symbol">$</span>
       </label>
       <input id="input" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Terminal command input">
     </form>
 
-    <p class="hint">Try: <kbd>help</kbd> <kbd>about</kbd> <kbd>openteam</kbd> <kbd>links</kbd> <kbd>contact</kbd></p>
+    <p class="hint">Try: <kbd>help</kbd> <kbd>about</kbd> <kbd>teemai</kbd> <kbd>projects</kbd> <kbd>links</kbd> <kbd>contact</kbd></p>
   </div>
 
   <script>
   const DATA = {
     name: "Korbin Joe",
     slug: "Korbin Joe",
-    about: "Hi, I am Korbin Joe.\nI am building OpenTeam.",
-    openteam: "Build your AI agent team with OpenTeam, leveraging Claude, Codex,\nand similar technologies in minutes.",
-    openteamUrl: "https://github.com/korbinjoe/openteam",
+    about: "Hi, I am Korbin Joe.\nI am building TeemAI.",
+    teemaiDesc: "Build your AI agent team with TeemAI, leveraging Claude, Codex,\nand similar technologies in minutes.",
+    teemaiUrl: "https://github.com/korbinjoe/TeemAI",
+    projects: [
+      { name: "TeemAI", url: "https://github.com/korbinjoe/TeemAI", desc: "Build your AI agent team in minutes" },
+      { name: "trending8", url: "https://github.com/korbinjoe/trending8", desc: "Trending content aggregator" },
+      { name: "toools", url: "https://github.com/korbinjoe/toools", desc: "Developer tools collection" },
+      { name: "slides-skill", url: "https://github.com/korbinjoe/slides-skill", desc: "Slide generation skill" },
+    ],
     links: [
       { name: "github", url: "https://github.com/korbinjoe", label: "Github" },
       { name: "twitter", url: "https://twitter.com/korbinjoe", label: "Twitter" },
@@ -286,17 +292,32 @@ Type <em>help</em> for commands · <em>clear</em> to reset</p>
   const bootSequence = [
     { cmd: "whoami", run: () => DATA.slug },
     { cmd: "cat about.txt", run: () => DATA.about },
-    { cmd: "openteam --info", run: () => formatOpenteam() },
+    { cmd: "teemai --info", run: () => formatTeemai() },
+    { cmd: "projects --active", run: () => formatProjects() },
     { cmd: "links --list", run: () => formatLinks() },
     { cmd: "contact", run: () => DATA.email },
   ];
 
   function promptHtml() {
-    return `<span class="user">korbin</span><span class="at">@</span><span class="host">openteam</span><span class="symbol">:</span><span class="path">~</span><span class="symbol">$</span>`;
+    return `<span class="user">korbin</span><span class="at">@</span><span class="host">teemai</span><span class="symbol">:</span><span class="path">~</span><span class="symbol">$</span>`;
   }
 
-  function formatOpenteam() {
-    return `${DATA.openteam}\n\n→ ${DATA.openteamUrl}`;
+  function formatTeemai() {
+    return `${DATA.teemaiDesc}\n\n→ ${DATA.teemaiUrl}`;
+  }
+
+  function formatProjects() {
+    const pad = Math.max(...DATA.projects.map((p) => p.name.length)) + 2;
+    return DATA.projects
+      .map((p) => `${p.name.padEnd(pad)} ${p.desc}\n${"".padEnd(pad)} ${p.url}`)
+      .join("\n\n");
+  }
+
+  function formatProjectsHtml() {
+    const pad = Math.max(...DATA.projects.map((p) => p.name.length)) + 2;
+    return DATA.projects
+      .map((p) => `${p.name.padEnd(pad)} ${p.desc}\n${"".padEnd(pad)} <a href="${p.url}" target="_blank" rel="noopener noreferrer">${p.url}</a>`)
+      .join("\n\n");
   }
 
   function formatLinks() {
@@ -393,7 +414,8 @@ Type <em>help</em> for commands · <em>clear</em> to reset</p>
         "Available commands:",
         "  whoami        Show username",
         "  about         Personal intro",
-        "  openteam      OpenTeam project info",
+        "  teemai        TeemAI project info",
+        "  projects      Active projects in development",
         "  links         Social profiles",
         "  contact       Email address",
         "  clear         Clear terminal",
@@ -403,15 +425,16 @@ Type <em>help</em> for commands · <em>clear</em> to reset</p>
 
     if (c === "whoami") return DATA.slug;
     if (c === "about" || c === "cat about.txt") return DATA.about;
-    if (c === "openteam" || c === "openteam --info") return { text: formatOpenteam(), html: formatOpenteamHtml() };
+    if (c === "teemai" || c === "teemai --info") return { text: formatTeemai(), html: formatTeemaiHtml() };
+    if (c === "projects" || c === "projects --active") return { text: formatProjects(), html: formatProjectsHtml() };
     if (c === "links" || c === "links --list") return { text: formatLinks(), html: formatLinksHtml() };
     if (c === "contact") return { text: DATA.email, html: `<a href="mailto:${DATA.email}">${DATA.email}</a>` };
 
     return { error: true, text: `command not found: ${cmd}\nTry 'help' for available commands.` };
   }
 
-  function formatOpenteamHtml() {
-    return `${DATA.openteam}\n\n→ <a href="${DATA.openteamUrl}" target="_blank" rel="noopener noreferrer">${DATA.openteamUrl}</a>`;
+  function formatTeemaiHtml() {
+    return `${DATA.teemaiDesc}\n\n→ <a href="${DATA.teemaiUrl}" target="_blank" rel="noopener noreferrer">${DATA.teemaiUrl}</a>`;
   }
 
   async function handleInput(raw) {
@@ -460,11 +483,13 @@ Type <em>help</em> for commands · <em>clear</em> to reset</p>
       await runCommand(step.cmd, step.run, {
         htmlOutput: step.cmd.startsWith("links")
           ? formatLinksHtml()
-          : step.cmd.startsWith("openteam")
-            ? formatOpenteamHtml()
-            : step.cmd === "contact"
-              ? `<a href="mailto:${DATA.email}">${DATA.email}</a>`
-              : null,
+          : step.cmd.startsWith("projects")
+            ? formatProjectsHtml()
+            : step.cmd.startsWith("teemai")
+              ? formatTeemaiHtml()
+              : step.cmd === "contact"
+                ? `<a href="mailto:${DATA.email}">${DATA.email}</a>`
+                : null,
       });
       await sleep(reducedMotion ? 0 : 480);
     }
