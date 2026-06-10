@@ -1,9 +1,35 @@
-# Deno Examples: Hello, World!
+# Korbin Joe
 
-Simply serving a single file over HTTP
+Personal intro site with a terminal shell interface. Type commands in the browser (e.g. `help`, `about`, `teemai`) to explore content.
 
-## Get your own copy to explore
+## Local preview
 
-You can clone this example into a repo of your own, and use it to set up a new application hosted on Deno Deploy in a few clicks
+Requires [Deno](https://deno.com/).
 
-[![Deploy on Deno](https://deno.com/button)](https://app.deno.com/new?clone=https://github.com/denoland/examples&path=hello-world)
+```bash
+# Clone the repo and enter the project directory
+cd intro
+
+# Start the dev server (hot-reloads on file changes)
+deno task dev
+```
+
+Open [http://localhost:8000](http://localhost:8000) in your browser.
+
+Or run directly:
+
+```bash
+deno run --watch --allow-read --allow-net main.ts
+```
+
+## Project structure
+
+| File | Description |
+|------|-------------|
+| `index.html` | Page markup and terminal interaction logic |
+| `main.ts` | Deno static file server |
+| `favicon.svg` | Site icon |
+
+## Deployment
+
+Hosted on Deno Deploy. `main.ts` serves `index.html` and `favicon.svg`.
