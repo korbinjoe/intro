@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#131617">
   <title>Korbin Joe</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="/favicon.svg">
@@ -13,26 +14,32 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
   :root {
-    /* 中国传统色：玄墨 · 宣纸 · 朱砂 · 石青 · 石绿 · 赤金 · 赭石 */
-    --bg: #0b0a08;
-    --surface: #141210;
-    --surface-elevated: #1a1814;
-    --border: rgba(201, 164, 92, 0.2);
-    --border-faint: rgba(201, 164, 92, 0.08);
-    --text: #ede4d4;
-    --muted: #8a8174;
-    --prompt-user: #c9a45c;
-    --prompt-host: #5c8a7a;
-    --prompt-path: #a85a4a;
-    --prompt-symbol: #6e685e;
-    --cmd: #c4956a;
-    --output: #ddd4c4;
-    --accent: #b73e2a;
-    --link: #5a7a8a;
-    --link-hover: #7a9aad;
-    --error: #8b3a2f;
-    --gold: #c9a45c;
+    /* Burnished copper on graphite: one warm accent, dry opaque surfaces. */
+    color-scheme: dark;
+    --bg: #131617;
+    --surface: #1b1e1f;
+    --surface-elevated: #262a2b;
+    --surface-hover: #342c27;
+    --border: #414441;
+    --border-faint: #303534;
+    --border-active: #a2785e;
+    --text: #e7e4dc;
+    --muted: #aaa69d;
+    --prompt-user: var(--accent);
+    --prompt-host: #c4c0b5;
+    --prompt-path: #bc9d87;
+    --prompt-symbol: var(--muted);
+    --cmd: #e5c3a9;
+    --output: #d4d2c9;
+    --accent: #d29a78;
+    --link: var(--accent);
+    --link-hover: #edbd9e;
+    --error: #e0a18f;
+    --selection: #654934;
+    --selection-text: #fff0df;
+    --scrollbar: #857568;
     --mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+    --radius: 10px;
   }
 
   *, *::before, *::after {
@@ -42,71 +49,85 @@
   }
 
   html {
-    font-size: 15px;
+    font-size: 16px;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scrollbar-color: var(--scrollbar) var(--bg);
+    scrollbar-width: thin;
+  }
+
+  ::selection {
+    background: var(--selection);
+    color: var(--selection-text);
+  }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+    border: 2px solid var(--bg);
+    border-radius: 5px;
   }
 
   body {
     min-height: 100dvh;
-    background:
-      radial-gradient(ellipse 120% 70% at 50% -10%, rgba(183, 62, 42, 0.07), transparent 55%),
-      radial-gradient(ellipse 70% 50% at 100% 100%, rgba(92, 138, 122, 0.06), transparent 50%),
-      radial-gradient(ellipse 60% 40% at 0% 80%, rgba(201, 164, 92, 0.04), transparent 45%),
-      var(--bg);
+    background: var(--bg);
     color: var(--text);
     font-family: var(--mono);
-    line-height: 1.6;
-    padding: clamp(1rem, 4vw, 2.5rem);
+    line-height: 1.65;
+    padding: clamp(0.85rem, 3.5vw, 2.25rem);
   }
 
   .shell {
     position: relative;
-    min-height: calc(100dvh - clamp(2rem, 8vw, 5rem));
+    min-height: calc(100dvh - clamp(1.7rem, 7vw, 4.5rem));
     display: flex;
     flex-direction: column;
-    max-width: 52rem;
+    max-width: min(56rem, 100%);
     margin: 0 auto;
-    padding: clamp(1.25rem, 4vw, 2rem);
-    background: linear-gradient(165deg, rgba(26, 24, 20, 0.97) 0%, rgba(14, 12, 10, 0.99) 100%);
+    padding: clamp(1.35rem, 4vw, 2.25rem);
+    background: var(--surface);
     border: 1px solid var(--border);
-    box-shadow:
-      0 0 0 1px rgba(0, 0, 0, 0.45),
-      inset 0 1px 0 var(--border-faint),
-      0 28px 56px rgba(0, 0, 0, 0.55);
+    border-radius: var(--radius);
+    transition: border-color 0.25s ease;
+  }
+
+  .shell:focus-within {
+    border-color: var(--border-active);
   }
 
   .shell::before,
   .shell::after {
     content: "";
     position: absolute;
-    width: 14px;
-    height: 14px;
-    border-color: rgba(201, 164, 92, 0.32);
+    width: 16px;
+    height: 16px;
+    border-color: var(--border-active);
     border-style: solid;
     pointer-events: none;
   }
 
   .shell::before {
-    top: 10px;
-    left: 10px;
+    top: 12px;
+    left: 12px;
     border-width: 1px 0 0 1px;
   }
 
   .shell::after {
-    right: 10px;
-    bottom: 10px;
+    right: 12px;
+    bottom: 12px;
     border-width: 0 1px 1px 0;
   }
 
   .banner {
     position: relative;
     color: var(--muted);
-    font-size: 0.75rem;
-    margin-bottom: 1.75rem;
+    font-size: clamp(0.78rem, 2.2vw, 0.88rem);
+    margin-bottom: 1.85rem;
     white-space: pre-line;
     border-bottom: 1px solid var(--border-faint);
-    padding-bottom: 1rem;
-    letter-spacing: 0.04em;
+    padding-bottom: 1.1rem;
+    letter-spacing: 0.05em;
   }
 
   .banner::after {
@@ -114,48 +135,52 @@
     position: absolute;
     bottom: -1px;
     left: 0;
-    width: 2.5rem;
-    height: 1px;
-    background: linear-gradient(90deg, var(--accent), transparent);
+    width: 3rem;
+    height: 2px;
+    background: var(--accent);
   }
 
   .banner em {
-    color: var(--gold);
+    color: var(--accent);
     font-style: normal;
+    font-weight: 500;
   }
 
   #history {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
-    font-size: clamp(0.8125rem, 2.5vw, 0.875rem);
+    gap: 0.45rem;
+    font-size: clamp(0.875rem, 2.4vw, 0.95rem);
   }
 
   .entry {
-    animation: fade-in 0.2s ease-out;
+    animation: fade-in 0.22s ease-out;
   }
 
   .prompt-line {
     display: flex;
     flex-wrap: wrap;
     gap: 0;
-    word-break: break-all;
+    word-break: break-word;
+    overflow-wrap: anywhere;
   }
 
-  .prompt-line .user { color: var(--prompt-user); }
+  .prompt-line .user { color: var(--prompt-user); font-weight: 500; }
   .prompt-line .at,
   .prompt-line .symbol { color: var(--prompt-symbol); }
   .prompt-line .host { color: var(--prompt-host); }
   .prompt-line .path { color: var(--prompt-path); }
-  .prompt-line .cmd { color: var(--cmd); margin-left: 0.35rem; }
+  .prompt-line .cmd { color: var(--cmd); margin-left: 0.4rem; font-weight: 500; }
 
   .output {
     color: var(--output);
     white-space: pre-wrap;
     word-break: break-word;
-    padding-left: 0;
-    margin: 0.15rem 0 0.65rem;
+    overflow-wrap: anywhere;
+    padding: 0.2rem 0 0.15rem;
+    margin: 0.2rem 0 0.8rem;
+    border-left: 2px solid transparent;
   }
 
   .output.muted { color: var(--muted); }
@@ -164,41 +189,51 @@
   .output a {
     color: var(--link);
     text-decoration: none;
-    border-bottom: 1px dashed rgba(90, 122, 138, 0.4);
-    transition: color 0.2s ease, border-color 0.2s ease;
+    border-bottom: 1px dashed var(--border-active);
+    transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+    border-radius: 2px;
   }
 
   .output a:hover {
     color: var(--link-hover);
     border-bottom-color: var(--link-hover);
+    border-bottom-style: solid;
+    background: var(--surface-hover);
+  }
+
+  .output a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
   }
 
   .input-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    margin-top: 0.5rem;
-    padding-top: 0.75rem;
+    margin-top: 0.65rem;
+    padding-top: 0.95rem;
     border-top: 1px solid var(--border-faint);
-    font-size: clamp(0.8125rem, 2.5vw, 0.875rem);
+    font-size: clamp(0.875rem, 2.4vw, 0.95rem);
+    gap: 0.15rem 0;
   }
 
   .input-row input {
     flex: 1;
-    min-width: 8rem;
+    min-width: 10rem;
     background: transparent;
     border: none;
     outline: none;
     color: var(--cmd);
     font: inherit;
     caret-color: var(--accent);
-    padding: 0;
-    margin-left: 0.35rem;
+    padding: 0.15rem 0;
+    margin-left: 0.4rem;
   }
 
-  .input-row input::selection {
-    background: rgba(183, 62, 42, 0.35);
-    color: var(--text);
+  .input-row input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 2px;
   }
 
   .cursor {
@@ -213,19 +248,28 @@
   .cursor.off { opacity: 0; animation: none; }
 
   .hint {
-    margin-top: 1.25rem;
-    font-size: 0.6875rem;
+    margin-top: 1.4rem;
+    font-size: clamp(0.72rem, 2vw, 0.8rem);
     color: var(--muted);
     letter-spacing: 0.03em;
+    line-height: 1.8;
   }
 
   .hint kbd {
     color: var(--text);
     background: var(--surface-elevated);
     border: 1px solid var(--border-faint);
-    border-radius: 2px;
-    padding: 0.05rem 0.35rem;
+    border-radius: 4px;
+    padding: 0.12rem 0.42rem;
     font: inherit;
+    margin-right: 0.2rem;
+    transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .hint kbd:hover {
+    border-color: var(--border-active);
+    background: var(--surface-hover);
+    color: var(--accent);
   }
 
   @keyframes blink {
@@ -233,15 +277,28 @@
   }
 
   @keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { opacity: 0; transform: translateY(2px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 640px) {
+    body { padding: 0.65rem; }
+    .shell {
+      min-height: calc(100dvh - 1.3rem);
+      padding: 1.1rem 1rem 1.25rem;
+      border-radius: 8px;
+    }
+    .banner { margin-bottom: 1.25rem; }
+    .hint { margin-top: 1.1rem; }
+    .input-row input { min-width: 7rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .entry { animation: none; }
     .cursor { animation: none; }
+    .shell, .output a, .hint kbd { transition: none; }
   }
-  </style>
+</style>
 </head>
 
 <body>
