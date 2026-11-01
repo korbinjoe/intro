@@ -7,7 +7,7 @@
   <title>Korbin Joe</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="/favicon.svg">
-  <meta name="description" content="Korbin Joe — building TeemAI, your AI agent team in minutes.">
+  <meta name="description" content="Korbin Joe (@korbinjoe) — Agent engineer. XShot | Parrot | LPlayer | Desk Angler | toools.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -247,33 +247,32 @@
 <body>
   <div class="shell">
     <p class="banner" aria-hidden="true">korbin-joe shell v1.0.0
-Type <em>help</em> for commands · <em>clear</em> to reset</p>
+Agent engineer · Type <em>help</em> for commands · <em>clear</em> to reset</p>
 
     <div id="history" aria-live="polite" aria-label="Terminal output"></div>
 
     <form class="input-row" id="form" autocomplete="off">
       <label class="prompt-line" for="input" id="prompt-label">
-        <span class="user">korbin</span><span class="at">@</span><span class="host">teemai</span>
+        <span class="user">korbin</span><span class="at">@</span><span class="host">intro</span>
         <span class="symbol">:</span><span class="path">~</span><span class="symbol">$</span>
       </label>
       <input id="input" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Terminal command input">
     </form>
 
-    <p class="hint">Try: <kbd>help</kbd> <kbd>about</kbd> <kbd>teemai</kbd> <kbd>projects</kbd> <kbd>links</kbd> <kbd>contact</kbd></p>
+    <p class="hint">Try: <kbd>help</kbd> <kbd>whoami</kbd> <kbd>about</kbd> <kbd>projects</kbd> <kbd>links</kbd> <kbd>contact</kbd></p>
   </div>
 
   <script>
   const DATA = {
     name: "Korbin Joe",
-    slug: "Korbin Joe",
-    about: "Hi, I am Korbin Joe.\nI am building TeemAI.",
-    teemaiDesc: "Build your AI agent team with TeemAI, leveraging Claude, Codex,\nand similar technologies in minutes.",
-    teemaiUrl: "https://github.com/korbinjoe/TeemAI",
+    slug: "@korbinjoe",
+    about: "Hi, I am Korbin Joe (@korbinjoe).\nAgent engineer. XShot | Parrot | LPlayer | Desk Angler | toools.",
     projects: [
-      { name: "TeemAI", url: "https://github.com/korbinjoe/TeemAI", desc: "Build your AI agent team in minutes" },
-      { name: "trending8", url: "https://github.com/korbinjoe/trending8", desc: "Trending content aggregator" },
-      { name: "toools", url: "https://github.com/korbinjoe/toools", desc: "Developer tools collection" },
-      { name: "slides-skill", url: "https://github.com/korbinjoe/slides-skill", desc: "Slide generation skill" },
+      { name: "XShot", url: "https://github.com/korbinjoe/xshot", desc: "An independently implemented native macOS screenshot tool with annotations, beautification, and pinned images." },
+      { name: "Parrot", url: "https://github.com/korbinjoe/parrot", desc: "Open-source macOS & iOS translation, OCR, and multi-engine aggregator with plugin support." },
+      { name: "LPlayer", url: "https://github.com/korbinjoe/LPlayer", desc: "A local video player for macOS, built with AppKit and libmpv." },
+      { name: "Desk Angler", url: "https://github.com/korbinjoe/desk-angler", desc: "A lightweight native macOS seaside wallpaper with playable fishing breaks and local AI work rewards." },
+      { name: "toools", url: "https://github.com/korbinjoe/toools", desc: "An amazing toools zone — GitHub Awesome lists, Product Hunt launches, maintainer picks, and community submissions. https://toools.top" },
     ],
     links: [
       { name: "github", url: "https://github.com/korbinjoe", label: "Github" },
@@ -292,18 +291,13 @@ Type <em>help</em> for commands · <em>clear</em> to reset</p>
   const bootSequence = [
     { cmd: "whoami", run: () => DATA.slug },
     { cmd: "cat about.txt", run: () => DATA.about },
-    { cmd: "teemai --info", run: () => formatTeemai() },
     { cmd: "projects --active", run: () => formatProjects() },
     { cmd: "links --list", run: () => formatLinks() },
     { cmd: "contact", run: () => DATA.email },
   ];
 
   function promptHtml() {
-    return `<span class="user">korbin</span><span class="at">@</span><span class="host">teemai</span><span class="symbol">:</span><span class="path">~</span><span class="symbol">$</span>`;
-  }
-
-  function formatTeemai() {
-    return `${DATA.teemaiDesc}\n\n→ ${DATA.teemaiUrl}`;
+    return `<span class="user">korbin</span><span class="at">@</span><span class="host">intro</span><span class="symbol">:</span><span class="path">~</span><span class="symbol">$</span>`;
   }
 
   function formatProjects() {
@@ -412,10 +406,9 @@ Type <em>help</em> for commands · <em>clear</em> to reset</p>
     if (c === "help") {
       return [
         "Available commands:",
-        "  whoami        Show username",
-        "  about         Personal intro",
-        "  teemai        TeemAI project info",
-        "  projects      Active projects in development",
+        "  whoami        Show X handle",
+        "  about         Agent engineer bio",
+        "  projects      XShot, Parrot, LPlayer, Desk Angler & toools",
         "  links         Social profiles",
         "  contact       Email address",
         "  clear         Clear terminal",
@@ -425,16 +418,11 @@ Type <em>help</em> for commands · <em>clear</em> to reset</p>
 
     if (c === "whoami") return DATA.slug;
     if (c === "about" || c === "cat about.txt") return DATA.about;
-    if (c === "teemai" || c === "teemai --info") return { text: formatTeemai(), html: formatTeemaiHtml() };
     if (c === "projects" || c === "projects --active") return { text: formatProjects(), html: formatProjectsHtml() };
     if (c === "links" || c === "links --list") return { text: formatLinks(), html: formatLinksHtml() };
     if (c === "contact") return { text: DATA.email, html: `<a href="mailto:${DATA.email}">${DATA.email}</a>` };
 
     return { error: true, text: `command not found: ${cmd}\nTry 'help' for available commands.` };
-  }
-
-  function formatTeemaiHtml() {
-    return `${DATA.teemaiDesc}\n\n→ <a href="${DATA.teemaiUrl}" target="_blank" rel="noopener noreferrer">${DATA.teemaiUrl}</a>`;
   }
 
   async function handleInput(raw) {
@@ -485,11 +473,9 @@ Type <em>help</em> for commands · <em>clear</em> to reset</p>
           ? formatLinksHtml()
           : step.cmd.startsWith("projects")
             ? formatProjectsHtml()
-            : step.cmd.startsWith("teemai")
-              ? formatTeemaiHtml()
-              : step.cmd === "contact"
-                ? `<a href="mailto:${DATA.email}">${DATA.email}</a>`
-                : null,
+            : step.cmd === "contact"
+              ? `<a href="mailto:${DATA.email}">${DATA.email}</a>`
+              : null,
       });
       await sleep(reducedMotion ? 0 : 480);
     }

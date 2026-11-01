@@ -1,6 +1,6 @@
 # Korbin Joe
 
-Personal intro site with a terminal shell interface. Type commands in the browser (e.g. `help`, `about`, `teemai`) to explore content.
+Personal intro site with a terminal shell interface. Type commands in the browser (e.g. `help`, `about`, `projects`) to explore content.
 
 ## Local preview
 
