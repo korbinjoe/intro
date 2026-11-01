@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#131617">
   <title>Korbin Joe</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="/favicon.svg">
@@ -13,25 +14,30 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
   :root {
-    /* 中国传统色：玄墨 · 宣纸 · 朱砂 · 石青 · 石绿 · 赤金 · 赭石 */
-    --bg: #080705;
-    --surface: #12100d;
-    --surface-elevated: #1c1914;
-    --border: rgba(201, 164, 92, 0.28);
-    --border-faint: rgba(201, 164, 92, 0.12);
-    --text: #f3eadc;
-    --muted: #9a9082;
-    --prompt-user: #d4b06a;
-    --prompt-host: #6fa090;
-    --prompt-path: #c06a58;
-    --prompt-symbol: #7a7368;
-    --cmd: #d4a57a;
-    --output: #e8dfd0;
-    --accent: #c44732;
-    --link: #6d90a3;
-    --link-hover: #95b8c9;
-    --error: #9a4337;
-    --gold: #d4b06a;
+    /* Burnished copper on graphite: one warm accent, dry opaque surfaces. */
+    color-scheme: dark;
+    --bg: #131617;
+    --surface: #1b1e1f;
+    --surface-elevated: #262a2b;
+    --surface-hover: #342c27;
+    --border: #414441;
+    --border-faint: #303534;
+    --border-active: #a2785e;
+    --text: #e7e4dc;
+    --muted: #aaa69d;
+    --prompt-user: var(--accent);
+    --prompt-host: #c4c0b5;
+    --prompt-path: #bc9d87;
+    --prompt-symbol: var(--muted);
+    --cmd: #e5c3a9;
+    --output: #d4d2c9;
+    --accent: #d29a78;
+    --link: var(--accent);
+    --link-hover: #edbd9e;
+    --error: #e0a18f;
+    --selection: #654934;
+    --selection-text: #fff0df;
+    --scrollbar: #857568;
     --mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
     --radius: 10px;
   }
@@ -46,15 +52,26 @@
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    scrollbar-color: var(--scrollbar) var(--bg);
+    scrollbar-width: thin;
+  }
+
+  ::selection {
+    background: var(--selection);
+    color: var(--selection-text);
+  }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+    border: 2px solid var(--bg);
+    border-radius: 5px;
   }
 
   body {
     min-height: 100dvh;
-    background:
-      radial-gradient(ellipse 120% 70% at 50% -10%, rgba(196, 71, 50, 0.10), transparent 55%),
-      radial-gradient(ellipse 70% 50% at 100% 100%, rgba(111, 160, 144, 0.08), transparent 50%),
-      radial-gradient(ellipse 60% 40% at 0% 80%, rgba(212, 176, 106, 0.06), transparent 45%),
-      var(--bg);
+    background: var(--bg);
     color: var(--text);
     font-family: var(--mono);
     line-height: 1.65;
@@ -69,23 +86,14 @@
     max-width: min(56rem, 100%);
     margin: 0 auto;
     padding: clamp(1.35rem, 4vw, 2.25rem);
-    background: linear-gradient(165deg, rgba(28, 25, 20, 0.98) 0%, rgba(12, 10, 8, 0.99) 100%);
+    background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    box-shadow:
-      0 0 0 1px rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 var(--border-faint),
-      0 30px 60px rgba(0, 0, 0, 0.55);
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    transition: border-color 0.25s ease;
   }
 
   .shell:focus-within {
-    border-color: rgba(201, 164, 92, 0.42);
-    box-shadow:
-      0 0 0 1px rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 var(--border-faint),
-      0 30px 60px rgba(0, 0, 0, 0.55),
-      0 0 0 3px rgba(196, 71, 50, 0.12);
+    border-color: var(--border-active);
   }
 
   .shell::before,
@@ -94,7 +102,7 @@
     position: absolute;
     width: 16px;
     height: 16px;
-    border-color: rgba(201, 164, 92, 0.42);
+    border-color: var(--border-active);
     border-style: solid;
     pointer-events: none;
   }
@@ -129,11 +137,11 @@
     left: 0;
     width: 3rem;
     height: 2px;
-    background: linear-gradient(90deg, var(--accent), transparent);
+    background: var(--accent);
   }
 
   .banner em {
-    color: var(--gold);
+    color: var(--accent);
     font-style: normal;
     font-weight: 500;
   }
@@ -181,7 +189,7 @@
   .output a {
     color: var(--link);
     text-decoration: none;
-    border-bottom: 1px dashed rgba(109, 144, 163, 0.55);
+    border-bottom: 1px dashed var(--border-active);
     transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
     border-radius: 2px;
   }
@@ -189,7 +197,8 @@
   .output a:hover {
     color: var(--link-hover);
     border-bottom-color: var(--link-hover);
-    background: rgba(109, 144, 163, 0.12);
+    border-bottom-style: solid;
+    background: var(--surface-hover);
   }
 
   .output a:focus-visible {
@@ -221,9 +230,10 @@
     margin-left: 0.4rem;
   }
 
-  .input-row input::selection {
-    background: rgba(196, 71, 50, 0.35);
-    color: var(--text);
+  .input-row input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 2px;
   }
 
   .cursor {
@@ -257,9 +267,9 @@
   }
 
   .hint kbd:hover {
-    border-color: rgba(201, 164, 92, 0.45);
-    background: #241f18;
-    color: var(--gold);
+    border-color: var(--border-active);
+    background: var(--surface-hover);
+    color: var(--accent);
   }
 
   @keyframes blink {
